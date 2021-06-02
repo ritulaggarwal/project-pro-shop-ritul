@@ -18,7 +18,12 @@ import {
   PRODUCT_CREATE_REVIEW_REQUEST,
   PRODUCT_CREATE_REVIEW_SUCCESS,
   PRODUCT_CREATE_REVIEW_FAIL,
+  PRODUCT_TOP_REQUEST,
+  PRODUCT_TOP_SUCCESS,
+  PRODUCT_TOP_FAIL,
 } from '../constants/productConstants'
+import { logout } from './userActions'
+
 
 export const listProducts = (keyword = '', pageNumber = '') => async (
   dispatch
@@ -94,7 +99,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
         ? error.response.data.message
         : error.message
     if (message === 'Not authorized, token failed') {
-      //dispatch(logout())
+        dispatch(logout())
     }
     dispatch({
       type: PRODUCT_DELETE_FAIL,
@@ -132,7 +137,7 @@ export const createProduct = () => async (dispatch, getState) => {
         ? error.response.data.message
         : error.message
     if (message === 'Not authorized, token failed') {
-      //dispatch(logout())
+        dispatch(logout())
     }
     dispatch({
       type: PRODUCT_CREATE_FAIL,
@@ -175,7 +180,7 @@ export const updateProduct = (product) => async (dispatch, getState) => {
         ? error.response.data.message
         : error.message
     if (message === 'Not authorized, token failed') {
-      //dispatch(logout())
+        dispatch(logout())
     }
     dispatch({
       type: PRODUCT_UPDATE_FAIL,
@@ -216,11 +221,33 @@ export const createProductReview = (productId, review) => async (
         ? error.response.data.message
         : error.message
     if (message === 'Not authorized, token failed') {
-     // dispatch(logout())
+       dispatch(logout())
     }
     dispatch({
       type: PRODUCT_CREATE_REVIEW_FAIL,
       payload: message,
+    })
+  }
+}
+
+
+export const listTopProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: PRODUCT_TOP_REQUEST })
+
+    const { data } = await axios.get(`/api/products/top`)
+
+    dispatch({
+      type: PRODUCT_TOP_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_TOP_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     })
   }
 }

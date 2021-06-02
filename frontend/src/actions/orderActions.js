@@ -20,6 +20,7 @@ import {
     ORDER_PAY_REQUEST,
     ORDER_PAY_SUCCESS
 } from '../constants/orderConstants'
+import { logout } from './userActions'
 
 export const createOrder = (order) => async (dispatch, getState) => {
     try {
@@ -55,7 +56,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
                 ? error.response.data.message
                 : error.message
         if (message === 'Not authorized, token failed') {
-            //dispatch(logout())
+            dispatch(logout())
         }
         dispatch({
             type: ORDER_CREATE_FAIL,
@@ -93,7 +94,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
           ? error.response.data.message
           : error.message
       if (message === 'Not authorized, token failed') {
-       // dispatch(logout())
+         dispatch(logout())
       }
       dispatch({
         type: ORDER_DETAILS_FAIL,
@@ -139,7 +140,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
           ? error.response.data.message
           : error.message
       if (message === 'Not authorized, token failed') {
-        //dispatch(logout())
+          dispatch(logout())
       }
       dispatch({
         type: ORDER_PAY_FAIL,
@@ -178,7 +179,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
           ? error.response.data.message
           : error.message
       if (message === 'Not authorized, token failed') {
-        //dispatch(logout())
+          dispatch(logout())
       }
       dispatch({
         type: ORDER_LIST_MY_FAIL,
@@ -217,7 +218,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
           ? error.response.data.message
           : error.message
       if (message === 'Not authorized, token failed') {
-       // dispatch(logout())
+         dispatch(logout())
       }
       dispatch({
         type: ORDER_LIST_FAIL,
@@ -259,7 +260,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
           ? error.response.data.message
           : error.message
       if (message === 'Not authorized, token failed') {
-      //  dispatch(logout())
+          dispatch(logout())
       }
       dispatch({
         type: ORDER_DELIVER_FAIL,
